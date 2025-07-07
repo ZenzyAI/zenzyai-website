@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZenzyAI - AI Voice Agents for Real Estate</title>
+    <title>ZenzyAI - AI Chatbots That Never Sleep</title>
     <style>
         * {
             margin: 0;
@@ -208,6 +208,246 @@
             color: #666;
         }
         
+        .problem-section {
+            background: #f8fafc;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .problem-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: #1e40af;
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 3rem;
+        }
+        
+        .problem-item {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .problem-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #dc2626;
+        }
+        
+        .problem-item p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Chat Widget Styles */
+        .chat-widget {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+        }
+        
+        .chat-toggle {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .chat-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(30, 64, 175, 0.4);
+        }
+        
+        .chat-window {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-header h4 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        #chat-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 0;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f8fafc;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .bot-message {
+            justify-content: flex-start;
+        }
+        
+        .user-message {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            word-wrap: break-word;
+        }
+        
+        .bot-message .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .user-message .message-content {
+            background: #1e40af;
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        #chat-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+        
+        #chat-input:focus {
+            border-color: #1e40af;
+        }
+        
+        #chat-send {
+            background: #1e40af;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        #chat-send:hover {
+            background: #1e3a8a;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 15px;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            max-width: 80%;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #1e40af;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .chat-widget {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .chat-window {
+                width: 300px;
+                height: 450px;
+            }
+            
+            .chat-toggle {
+                padding: 12px 16px;
+            }
+            
+            #chat-text {
+                display: none;
+            }
+        }
+        
         footer {
             background: #1f2937;
             color: white;
@@ -232,6 +472,10 @@
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -244,9 +488,31 @@
 
     <section class="hero">
         <div class="container">
-            <h1>Never Miss Another Lead Again</h1>
-            <div class="subtitle">AI Voice Agents That Sound Exactly Like YOU - Converting Leads 24/7</div>
-            <p>We help top-performing real estate agents and investors automate their lead follow-up with AI voice agents that sound exactly like them, qualify prospects, and book appointments while they focus on closing deals.</p>
+            <h1>Never Miss Another Customer Again</h1>
+            <div class="subtitle">AI Chatbots That Convert Website Visitors Into Paying Customers 24/7</div>
+            <p>We help small businesses capture and convert more leads with intelligent AI chatbots that answer questions, qualify prospects, and book appointments automatically - even when you're sleeping.</p>
+        </div>
+    </section>
+
+    <section class="problem-section">
+        <div class="container">
+            <h2>Are You Losing Customers Every Day?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; color: #666;">Most small businesses are bleeding potential customers without even knowing it...</p>
+            
+            <div class="problem-grid">
+                <div class="problem-item">
+                    <h3>🕐 Customers Leave When No One Answers</h3>
+                    <p>67% of website visitors leave if they can't get instant answers to their questions</p>
+                </div>
+                <div class="problem-item">
+                    <h3>📞 You Can't Answer Every Call</h3>
+                    <p>Miss calls during busy hours, weekends, or after hours and lose deals to competitors</p>
+                </div>
+                <div class="problem-item">
+                    <h3>💸 Leads Go Cold Fast</h3>
+                    <p>Every minute without response reduces your chances of converting a lead by 10%</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -254,23 +520,24 @@
         <div class="container">
             <div class="cta-content">
                 <div class="cta-text">
-                    <h2>Ready to Have AI Handle Your Lead Follow-up?</h2>
-                    <p>ZenzyAI creates custom AI voice agents that sound exactly like you and handle your lead qualification, appointment booking, and follow-up calls automatically. Your prospects will think they're talking to you personally.</p>
+                    <h2>Stop Losing Customers to Slow Response Times</h2>
+                    <p>ZenzyAI creates intelligent chatbots that work 24/7 on your website, social media, and messaging platforms. Your customers get instant answers and you capture every lead automatically.</p>
                     
                     <ul class="benefits">
-                        <li>AI voice agent trained to sound exactly like YOU</li>
-                        <li>Automatically calls and qualifies new leads within minutes</li>
+                        <li>Instantly answers customer questions about your products/services</li>
+                        <li>Qualifies leads and collects contact information</li>
                         <li>Books appointments directly into your calendar</li>
-                        <li>Handles follow-up calls and lead nurturing</li>
-                        <li>Works 24/7, even on weekends and holidays</li>
-                        <li>Integrates with your existing CRM and lead sources</li>
+                        <li>Handles multiple conversations simultaneously</li>
+                        <li>Works on your website, Facebook, Instagram, and WhatsApp</li>
+                        <li>Sends qualified leads directly to your email/CRM</li>
+                        <li>Learns your business to give better answers over time</li>
                     </ul>
                     
-                    <p><strong>Stop losing deals to agents who respond faster. Let AI give you the competitive edge.</strong></p>
+                    <p><strong>Stop losing customers to businesses that respond faster. Get your AI chatbot working for you today.</strong></p>
                 </div>
                 
                 <div class="contact-form">
-                    <h3>Get Your Free AI Voice Agent Demo</h3>
+                    <h3>Get Your Free Chatbot Demo</h3>
                     <form action="https://formspree.io/f/movwjkor" method="POST">
                         <div class="form-group">
                             <label for="name">Full Name *</label>
@@ -288,34 +555,38 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="business">Your Role *</label>
+                            <label for="business">Type of Business *</label>
                             <select id="business" name="business" required>
-                                <option value="">Select your role</option>
-                                <option value="agent">Real Estate Agent</option>
-                                <option value="broker">Real Estate Broker</option>
-                                <option value="investor">Real Estate Investor</option>
-                                <option value="team-lead">Team Lead/Manager</option>
+                                <option value="">Select your business type</option>
+                                <option value="retail">Retail/E-commerce</option>
+                                <option value="restaurant">Restaurant/Food Service</option>
+                                <option value="healthcare">Healthcare/Medical</option>
+                                <option value="fitness">Fitness/Wellness</option>
+                                <option value="professional">Professional Services</option>
+                                <option value="home-services">Home Services</option>
+                                <option value="automotive">Automotive</option>
+                                <option value="beauty">Beauty/Salon</option>
                                 <option value="other">Other</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
-                            <label for="revenue">Monthly Transaction Volume</label>
+                            <label for="revenue">Monthly Revenue</label>
                             <select id="revenue" name="revenue">
-                                <option value="">Select transaction volume</option>
-                                <option value="1-3">1-3 deals per month</option>
-                                <option value="4-8">4-8 deals per month</option>
-                                <option value="9-15">9-15 deals per month</option>
-                                <option value="15+">15+ deals per month</option>
+                                <option value="">Select revenue range</option>
+                                <option value="0-10k">$0 - $10,000</option>
+                                <option value="10k-25k">$10,000 - $25,000</option>
+                                <option value="25k-50k">$25,000 - $50,000</option>
+                                <option value="50k+">$50,000+</option>
                             </select>
                         </div>
                         
                         <div class="form-group">
                             <label for="challenge">Biggest Challenge</label>
-                            <textarea id="challenge" name="challenge" rows="3" placeholder="What's your biggest challenge with lead follow-up and conversion?"></textarea>
+                            <textarea id="challenge" name="challenge" rows="3" placeholder="What's your biggest challenge with customer inquiries and lead conversion?"></textarea>
                         </div>
                         
-                        <button type="submit" class="btn">Get My Free AI Voice Demo</button>
+                        <button type="submit" class="btn">Get My Free Chatbot Demo</button>
                     </form>
                 </div>
             </div>
@@ -326,28 +597,171 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <h3>73%</h3>
-                    <p>Of leads prefer phone calls over texts</p>
+                    <h3>90%</h3>
+                    <p>Of customers expect instant responses</p>
                 </div>
                 <div class="stat-item">
                     <h3>5min</h3>
-                    <p>Average response time kills conversion</p>
+                    <p>Average response time kills 50% of leads</p>
                 </div>
                 <div class="stat-item">
-                    <h3>30%</h3>
-                    <p>Higher conversion with instant follow-up</p>
+                    <h3>67%</h3>
+                    <p>Of website visitors leave without getting answers</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24/7</h3>
+                    <p>Chatbots work when you can't</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Chat Widget -->
+    <div id="chat-widget" class="chat-widget">
+        <div id="chat-toggle" class="chat-toggle">
+            <span id="chat-icon">💬</span>
+            <span id="chat-text">Try Our AI Assistant</span>
+        </div>
+        
+        <div id="chat-window" class="chat-window">
+            <div class="chat-header">
+                <h4>ZenzyAI Assistant</h4>
+                <button id="chat-close">&times;</button>
+            </div>
+            <div id="chat-messages" class="chat-messages">
+                <div class="message bot-message">
+                    <div class="message-content">
+                        Hi! I'm the ZenzyAI assistant. I can help answer questions about our AI chatbot services. What would you like to know?
+                    </div>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Type your message..." />
+                <button id="chat-send">Send</button>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <div class="container">
-            <p>&copy; 2025 ZenzyAI. Helping real estate professionals convert more leads with AI voice agents.</p>
+            <p>&copy; 2025 ZenzyAI. Helping small businesses convert more customers with intelligent AI chatbots.</p>
         </div>
     </footer>
 
     <script>
+        // Chat Widget Functionality
+        const chatToggle = document.getElementById('chat-toggle');
+        const chatWindow = document.getElementById('chat-window');
+        const chatClose = document.getElementById('chat-close');
+        const chatInput = document.getElementById('chat-input');
+        const chatSend = document.getElementById('chat-send');
+        const chatMessages = document.getElementById('chat-messages');
+        
+        // Your n8n webhook URL
+        const WEBHOOK_URL = 'https://zachweiland.app.n8n.cloud/webhook/904d4ca3-962f-4a84-af8d-dea610c3ab99/chat';
+        
+        // Toggle chat window
+        chatToggle.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // Close chat window
+        chatClose.addEventListener('click', () => {
+            chatWindow.style.display = 'none';
+        });
+        
+        // Send message function
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            chatInput.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            try {
+                // Send to n8n webhook
+                const response = await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                // Hide typing indicator
+                hideTypingIndicator();
+                
+                // Add bot response
+                const botResponse = data.response || data.message || "I'm sorry, I didn't understand that. Can you please rephrase your question?";
+                addMessage(botResponse, 'bot');
+                
+            } catch (error) {
+                console.error('Error sending message:', error);
+                hideTypingIndicator();
+                addMessage("I'm sorry, I'm having trouble connecting right now. Please try again or contact us directly.", 'bot');
+            }
+        }
+        
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = text;
+            
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Show typing indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message bot-message';
+            typingDiv.id = 'typing-indicator';
+            
+            const typingContent = document.createElement('div');
+            typingContent.className = 'typing-indicator';
+            typingContent.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+            
+            typingDiv.appendChild(typingContent);
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Hide typing indicator
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typing-indicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+        
+        // Send message on button click
+        chatSend.addEventListener('click', sendMessage);
+        
+        // Send message on Enter key
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
